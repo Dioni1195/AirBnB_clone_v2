@@ -42,5 +42,5 @@ fi
 ln -s /data/web_static/releases/test/ /data/web_static/current
 chown -R ubuntu:ubuntu /data
 location="location \/hbnb_static {\n\talias \/data\/web_static\/current\/;\n\t}"
-sed -i "/listen [::]:80 default_server;/a $location" /etc/nginx/sites-enabled/default
+sed -i "19i $location" /etc/nginx/sites-enabled/default
 sudo service nginx restart
