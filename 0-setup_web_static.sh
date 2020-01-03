@@ -5,8 +5,8 @@ if [ ! -x /usr/sbin/nginx ]; then
     apt-get -y install nginx
 fi
 
-if [ ! -d /data ]; then
-    mkdir /data
+if [ ! -d /data/ ]; then
+    mkdir /data/
 fi
 
 if [ ! -d /data/web_static/ ]; then
