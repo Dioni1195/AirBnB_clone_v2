@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #Setting webservers
-apt-get update
+apt-get -y update
 apt-get -y install nginx
 mkdir -p /data/
 mkdir -p /data/web_static/
@@ -21,4 +21,4 @@ ln -sf /data/web_static/releases/test/ /data/web_static/current
 chown -R ubuntu:ubuntu /data/
 location="location \/hbnb_static\/ {\n\talias \/data\/web_static\/current\/;\n\t}"
 sed -i "19i $location" /etc/nginx/sites-enabled/default
-sudo service nginx restart
+service nginx restart
