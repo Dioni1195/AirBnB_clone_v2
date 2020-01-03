@@ -1,30 +1,12 @@
 #!/usr/bin/env bash
 #Setting webservers
-if [ ! -x /usr/sbin/nginx ]; then
-    apt-get update
-    apt-get -y install nginx
-fi
-
-if [ ! -d /data/ ]; then
-    mkdir /data/
-fi
-
-if [ ! -d /data/web_static/ ]; then
-    mkdir /data/web_static/
-fi
-
-if [ ! -d /data/web_static/releases/ ]; then
-    mkdir /data/web_static/releases/
-fi
-
-if [ ! -d /data/web_static/shared/ ]; then
-    mkdir /data/web_static/shared/
-fi
-
-if [ ! -d /data/web_static/releases/test/ ]; then
-    mkdir /data/web_static/releases/test/
-fi
-
+apt-get update
+apt-get -y install nginx
+mkdir -p /data/
+mkdir -p /data/web_static/
+mkdir -p /data/web_static/releases/
+mkdir -p /data/web_static/shared/
+mkdir -p /data/web_static/releases/test/
 touch /data/web_static/releases/test/index.html
 
 echo "<html>
@@ -36,7 +18,7 @@ echo "<html>
 </html>" > /data/web_static/releases/test/index.html
 
 ln -sf /data/web_static/releases/test/ /data/web_static/current
-chown -R ubuntu:ubuntu /data
-location="location \/hbnb_static {\n\talias \/data\/web_static\/current\/;\n\t}"
+chown -R ubuntu:ubuntu /data/
+location="location \/hbnb_static\/ {\n\talias \/data\/web_static\/current\/;\n\t}"
 sed -i "19i $location" /etc/nginx/sites-enabled/default
 sudo service nginx restart
