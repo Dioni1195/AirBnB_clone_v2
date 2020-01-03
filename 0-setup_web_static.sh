@@ -35,11 +35,7 @@ echo "<html>
   </body>
 </html>" > /data/web_static/releases/test/index.html
 
-if [ -h /data/web_static/current ]; then
-    rm /data/web_static/current
-fi
-
-ln -s /data/web_static/releases/test/ /data/web_static/current
+ln -sf /data/web_static/releases/test/ /data/web_static/current
 chown -R ubuntu:ubuntu /data
 location="location \/hbnb_static {\n\talias \/data\/web_static\/current\/;\n\t}"
 sed -i "19i $location" /etc/nginx/sites-enabled/default
