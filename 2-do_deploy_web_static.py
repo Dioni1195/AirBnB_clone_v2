@@ -7,7 +7,8 @@ from os import path
 
 
 env.hosts = ['35.185.25.151', '34.73.128.159']
-
+env.user = 'ubuntu'
+env.key_filename = 'publickey'
 
 def do_pack():
     """ Function compress the files """
