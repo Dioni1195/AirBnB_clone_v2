@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Module """
-from fabric.api import run, local, put, env
+from fabric.api import env
+from fabric.operations import run, local, put
 from datetime import datetime
 from os import path
 
@@ -23,29 +24,27 @@ def do_pack():
 
 def do_deploy(archive_path):
     """ Function to deploy files to servers """
-    result_list = []
     if not path.exists(archive_path):
         return False
     name = archive_path.split("/")
     file_name = name[1]
     file_dir = name[1][:-4]
-    put(archive_path, "/tmp/{}".format(file_name))
-    result_list.append(run("mkdir -p /data/web_static/releases/{}/".
-                       format(file_name)))
-    result_list.append(run("tar -xzf {} /data/web_static/releases/{}/".
-                       format(file_name, file_dir)))
-    result_list.append(run("rm /tmp/{}".
-                       format(file_name)))
-    result_list.append(run("mv /data/web_static/releases/{}/web_static/*\
+    try:
+        put(archive_path, "/tmp/{}".format(file_name))
+        run("mkdir -p /data/web_static/releases/{}/".
+                       format(file_name))
+        run("tar -xzf {} /data/web_static/releases/{}/".
+                       format(file_name, file_dir))
+        run("rm /tmp/{}".format(file_name))
+        run("mv /data/web_static/releases/{}/web_static/*\
                             /data/web_static/releases/{}/".format(
-                                    file_dir, file_dir)))
-    result_list.append(run("rm -rf /data/web_static/releases/{}/web_static".
-                       format(file_dir)))
-    result_list.append(run("rm -rf /data/web_static/current"))
-    result_list.append(run("ln -s /data/web_static/releases/{}/\
-                            /data/web_static/current".format(file_dir)))
-    for result in result_list:
-        if result.failed:
-            return False
-    print("New version deployed!")
-    return True
+                                    file_dir, file_dir))
+        run("rm -rf /data/web_static/releases/{}/web_static".
+                       format(file_dir))
+        run("rm -rf /data/web_static/current")
+        run("ln -s /data/web_static/releases/{}/\
+                            /data/web_static/current".format(file_dir))
+        print("New version deployed!")
+        return True
+    except Exception:
+        return False
