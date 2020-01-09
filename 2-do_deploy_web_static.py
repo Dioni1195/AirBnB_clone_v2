@@ -7,8 +7,6 @@ from os import path
 
 
 env.hosts = ['35.185.25.151', '34.73.128.159']
-env.user = 'ubuntu'
-env.key_filename = 'publickey'
 
 def do_pack():
     """ Function compress the files """
@@ -33,8 +31,8 @@ def do_deploy(archive_path):
     try:
         put(archive_path, "/tmp/{}".format(file_name))
         run("mkdir -p /data/web_static/releases/{}/".
-                       format(file_name))
-        run("tar -xzf {} /data/web_static/releases/{}/".
+                       format(file_dir))
+        run("tar -xzf /tmp/{} -C /data/web_static/releases/{}/".
                        format(file_name, file_dir))
         run("rm /tmp/{}".format(file_name))
         run("mv /data/web_static/releases/{}/web_static/*\
