@@ -11,6 +11,8 @@ from models.review import Review
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
 from sqlalchemy.orm import scoped_session
+
+
 class DBStorage:
     """ Class to manage the storage in th DataBase
         Args:
@@ -19,6 +21,7 @@ class DBStorage:
     """
     __engine = None
     __session = None
+
     def __init__(self):
         user = environ.get('HBNB_MYSQL_USER')
         pwd = environ.get('HBNB_MYSQL_PWD')
@@ -30,6 +33,7 @@ class DBStorage:
         hbnb_env = environ.get('HBNB_ENV')
         if hbnb_env == 'test':
             Base.metadata.drop_all(self.__engine)
+
     def all(self, cls=None):
         """ Prints all the objects """
         classes = ['State', 'City', 'User', 'Place', 'Review', 'Amenity']
@@ -45,16 +49,20 @@ class DBStorage:
                 dict_return["{}.{}".format(info,
                             table.id)] = table
         return dict_return
+
     def new(self, obj):
         """ add the object to the current database session """
         self.__session.add(obj)
+
     def save(self):
         """  commit all changes of the current database session """
         self.__session.commit()
+
     def delete(self, obj=None):
         """ delete from the current database session """
         if obj is not None:
             self.__session.delete(obj)
+
     def reload(self):
         """ create all tables in the database """
         Base.metadata.create_all(self.__engine)
@@ -62,6 +70,7 @@ class DBStorage:
                                      expire_on_commit=False)
         Session = scoped_session(Session_maker)
         self.__session = Session()
+
     def close(self):
         """ Close the session """
         self.__session.close()
