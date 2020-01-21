@@ -6,6 +6,7 @@ import models
 from os import environ
 from sqlalchemy.orm import relationship
 
+
 class User(BaseModel, Base):
     """This is the class for user
     Attributes:

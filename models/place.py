@@ -2,7 +2,8 @@
 """This is the place class"""
 from models.base_model import BaseModel, Base
 import models
-from sqlalchemy import Table, Column, Integer, String, Float, DateTime, ForeignKey
+from sqlalchemy import Table, Column, Integer, String
+from sqlalchemy import Float, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from os import environ
 
@@ -11,12 +12,12 @@ metadata = Base.metadata
 
 """This is the association table between place and amenity """
 place_amenity = Table('place_amenity', metadata,
-Column('place_id', String(60), ForeignKey('places.id'),
-            primary_key=True, nullable=False),
-Column('amenity_id', String(69), ForeignKey('amenities.id'),
-            primary_key=True, nullable=False)
-    )
-
+                      Column('place_id', String(60), ForeignKey('places.id'),
+                             primary_key=True, nullable=False),
+                      Column('amenity_id', String(69),
+                             ForeignKey('amenities.id'),
+                             primary_key=True, nullable=False)
+                      )
 
 
 class Place(BaseModel, Base):
@@ -48,8 +49,11 @@ class Place(BaseModel, Base):
     amenity_ids = []
     gbl_storage = environ.get('HBNB_TYPE_STORAGE')
     if gbl_storage == 'db':
-        reviews = relationship('Review', backref='places', cascade='all, delete')
-        amenities = relationship('Amenity', secondary=place_amenity, viewonly=False, backref='places', cascade='all, delete')
+        reviews = relationship('Review',
+                               backref='places', cascade='all, delete')
+        amenities = relationship('Amenity', secondary=place_amenity,
+                                 viewonly=False, backref='places',
+                                 cascade='all, delete')
     else:
         @property
         def reviews(self):

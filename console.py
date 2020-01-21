@@ -14,6 +14,7 @@ from shlex import split
 from copy import deepcopy
 from os import environ
 
+
 class HBNBCommand(cmd.Cmd):
     """this class is entry point of the command interpreter
     """
@@ -136,7 +137,7 @@ class HBNBCommand(cmd.Cmd):
                 my_list.append(objects[key])
             print(my_list)
             return
-        if copy_class ==  "db":
+        if copy_class == "db":
             objects = storage.all()
         try:
             args = line.split(" ")
