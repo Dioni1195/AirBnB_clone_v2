@@ -23,4 +23,6 @@ def c(text=None):
     """ Prints with a parameter"""
     txt = text.replace('_', ' ')
     return 'C {}'.format(txt)
-app.run()
+
+if __name__ == '__main__':
+    app.run()

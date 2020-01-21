@@ -17,4 +17,6 @@ def hbnb():
     """ Prints HBNB """
     return 'HBNB'
 
-app.run()
+
+if __name__ == '__main__':
+    app.run()

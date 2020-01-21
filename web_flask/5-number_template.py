@@ -44,4 +44,6 @@ def number_template(n):
     """ Render a template"""
     return render_template('5-number.html', n=n)
 
-app.run()
+
+if __name__ == '__main__':
+    app.run()

@@ -38,4 +38,6 @@ def number(n):
     """ Prints with a parameter"""
     return '{} is a number'.format(n)
 
-app.run()
+
+if __name__ == '__main__':
+    app.run()
