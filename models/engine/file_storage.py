@@ -70,3 +70,7 @@ class FileStorage:
             if stringy in self.__objects:
                 del self.__objects[stringy]
             self.save()
+
+    def close(self):
+        """ Close a session """
+        self.reload()
