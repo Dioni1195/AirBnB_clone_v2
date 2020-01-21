@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This is the state class"""
 from models.base_model import BaseModel, Base
+from models.city import City
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from os import environ
@@ -20,7 +21,7 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             """ Return all cities related with the state """
-            all_cities = models.storage.all("City")
+            all_cities = models.storage.all(City)
             own_city = []
             for value in all_cities.values():
                 if self.id == value.state_id:

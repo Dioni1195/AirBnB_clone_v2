@@ -29,8 +29,7 @@ class FileStorage:
         if cls is None:
             return self.__objects
         for key in self.__objects.keys():
-            key_split = key.split('.')
-            if key_split[0] == cls:
+            if cls.__name__ in key:
                 new_dict[key] = self.__objects[key]
         return new_dict
 
