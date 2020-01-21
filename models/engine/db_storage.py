@@ -12,6 +12,7 @@ from models.amenity import Amenity
 from models.base_model import BaseModel, Base
 from sqlalchemy.orm import scoped_session
 
+
 class DBStorage:
     """ Class to manage the storage in th DataBase
         Args:
@@ -27,7 +28,8 @@ class DBStorage:
         hst = environ.get('HBNB_MYSQL_HOST')
         db = environ.get('HBNB_MYSQL_DB')
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}:3306/{}'.
-            format(user, pwd, hst, db), pool_pre_ping=True)
+                                      format(user, pwd, hst, db),
+                                      pool_pre_ping=True)
         #Base.metadata.create_all(self.__engine)
         #Session = sessionmaker(bind=self.__engine)
         #self.__session = Session()
@@ -44,10 +46,12 @@ class DBStorage:
         if cls is None:
             for table_name in classes:
                 for table in self.__session.query(table_name).all():
-                    dict_return["{}.{}".format(table_name.__name__, table.id)] = table
+                    dict_return["{}.{}".format(table_name.__name__,
+                                table.id)] = table
         else:
             for table in self.__session.query(cls).all():
-                dict_return["{}.{}".format(cls.__class__, table.id)] = table.to_dict()
+                dict_return["{}.{}".format(cls.__class__,
+                            table.id)] = table.to_dict()
 
         return dict_return
 
@@ -67,7 +71,8 @@ class DBStorage:
     def reload(self):
         """ create all tables in the database """
         Base.metadata.create_all(self.__engine)
-        Session_maker = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        Session_maker = sessionmaker(bind=self.__engine,
+                                     expire_on_commit=False)
         Session = scoped_session(Session_maker)
         self.__session = Session()
 
