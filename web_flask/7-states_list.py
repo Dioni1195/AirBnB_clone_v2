@@ -4,6 +4,8 @@ from models.state import State
 from flask import Flask, render_template
 """ This module import data from storage """
 
+app = Flask(__name__)
+
 
 @app.teardown_appcontext
 def close(arg):
