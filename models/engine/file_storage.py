@@ -26,10 +26,14 @@ class FileStorage:
             returns a dictionary of __object
         """
         new_dict = {}
+        if type(cls) is str:
+            match = cls
+        else:
+            match = cls.__name__
         if cls is None:
             return self.__objects
         for key in self.__objects.keys():
-            if cls.__name__ in key:
+            if match in key:
                 new_dict[key] = self.__objects[key]
         return new_dict
 
